@@ -13,6 +13,9 @@ void sort(int* arr, int n) {
             }
         }
     }
+
+    // sorting with selection sort
+    int x = 12;
 }
 
 int main() {
