@@ -2,11 +2,12 @@
 
 // Recursive function to find GCD
 int gcd_recursive(int a, int b) {
-    if (b == 0) {
+    if (a == b) {
         return a;
-    } else {
-        return gcd_recursive(b, a % b);
-    }
+    } else if(a>b) {
+        return gcd_recursive(a-b, b);
+    } else if(a<b)
+    return gcd_recursive(a,b-a);
 }
 
 // Non-recursive function to find GCD
