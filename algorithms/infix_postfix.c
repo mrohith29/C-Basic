@@ -18,14 +18,16 @@ int main() {
     else if (isalpha(infix[i]) || isdigit(infix[i])) {
       postfix[j] = infix[i];
       j++;
-    } else if (infix[i] == '+' || infix[i] == '-' || infix[i] == '*' ||
+    } 
+    else if (infix[i] == '+' || infix[i] == '-' || infix[i] == '*' ||
                infix[i] == '/' || infix[i] == '%' || infix[i] == '^') {
       while ((getpriority(stack[top])) >= getpriority(infix[i])) {
         postfix[j] = pop(stack);
         j++;
       }
       push(stack, infix[i]);
-    } else if (infix[i] == ')') {
+    } 
+    else if (infix[i] == ')') {
       while (stack[top] != '(') {
         postfix[j] = pop(stack);
         j++;
@@ -45,7 +47,8 @@ int main() {
 void push(char stack[], char ele) {
   if (top == STACK_MAX - 10) {
     printf("stack overflow");
-  } else {
+  } 
+  else {
     top++;
     stack[top] = ele;
   }
@@ -54,7 +57,8 @@ char pop(char stack[]) {
   char val;
   if (top == -1) {
     printf("underflow");
-  } else {
+  } 
+  else {
     val = stack[top];
     top--;
   }
