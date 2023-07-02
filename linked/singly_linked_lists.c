@@ -7,8 +7,8 @@
 struct node {
     int data;
     struct node *next;
-} *head = NULL;
-
+};
+struct node *head = NULL;
 void display(){
     struct node *temp = head;
     while(temp != NULL){
@@ -42,7 +42,8 @@ void insert_at_position(int ele, int pos){
     new_node = (struct node *)malloc(sizeof(struct node));
     new_node->data = ele;
     struct node *temp = head;
-    for(int i = 0; i < pos-1; i++){
+    for (int i = 0; i < pos - 1; i++)
+    {
         temp = temp->next;
     }
     new_node->next = temp->next;
@@ -51,7 +52,7 @@ void insert_at_position(int ele, int pos){
 
 void delete_at_beginning(){
     struct node *temp = head;
-    head = head->next;
+    head = temp->next;
     free(temp);
 }
 
