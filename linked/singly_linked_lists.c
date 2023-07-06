@@ -37,6 +37,7 @@ void insert_at_end(int ele){
     temp->next = new_node;
 }
 
+//pos = 3
 void insert_at_position(int ele, int pos){
     struct node *new_node;
     new_node = (struct node *)malloc(sizeof(struct node));
@@ -54,6 +55,30 @@ void delete_at_beginning(){
     struct node *temp = head;
     head = temp->next;
     free(temp);
+}
+
+void search(int ele){
+    struct node *temp = head;
+    int count = 0;
+    while (temp->data != ele && temp->next != NULL){
+        temp = temp->next;
+        count++;
+    }
+    if(temp->data == ele){
+        printf("Element found at position %d\n", count);
+    }
+    else{
+        printf("Element not found\n");
+    }
+}
+
+// Structure of the head
+void rev(struct node *temp){
+    if(temp == NULL){
+        return;
+    }
+    rev(temp->next);
+    printf("%d ", temp->data);
 }
 
 int main(){
@@ -87,6 +112,11 @@ int main(){
                 delete_at_beginning();
                 break;
             case 6:
+                printf("Enter the element to be searched: ");
+                scanf("%d", &ele);
+                search(ele);
+                break;
+            case 7:
                 exit(0);
             default:
                 printf("Invalid choice\n");
