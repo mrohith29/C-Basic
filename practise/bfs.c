@@ -1,88 +1,105 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdbool.h>
+#define MAX_NODES 100
 
-struct node{
-    int data;
-    struct node *left;
-    struct node *right;
-} *root = NULL;
+// Queue data structure for BFS
+int queue[MAX_NODES];
+int front = -1, rear = -1;
 
-struct node *getNode(int data)
+// Adjacency matrix representation of the graph
+int adjMatrix[MAX_NODES][MAX_NODES];
+int visited[MAX_NODES]; // To keep track of visited nodes
+
+// Function to enqueue a node
+void enqueue(int node)
 {
-    struct node *new_node = (struct node *)malloc(sizeof(struct node));
-    new_node->data = data;
-    new_node->left = NULL;
-    new_node->right = NULL;
-    return new_node;
-}
-
-struct node *insert(struct node *root, int data){
-    if(root == NULL){
-        root = getNode(data);
+    if (rear == MAX_NODES - 1)
+    {
+        printf("Queue is full.\n");
     }
-    else if(data <= root->data){
-        root->left = insert(root->left, data);
-    }
-    else{
-        root->right = insert(root->right, data);
-    }
-}
-
-void levelOrder(struct node *root){
-    if(root == NULL){
-        return;
-    }
-    struct node *queue[100];
-    int front = -1, rear = -1;
-    queue[++rear] = root;
-
-    while(front != rear){
-        struct node *current = queue[++front];
-        printf("%d ", current->data);
-        if(current->left != NULL){
-            queue[++rear] = current->left;
+    else
+    {
+        if (front == -1)
+        {
+            front = 0;
         }
-        if(current->right != NULL){
-            queue[++rear] = current->right;
+        rear++;
+        queue[rear] = node;
+    }
+}
+
+// Function to dequeue a node
+int dequeue()
+{
+    int node;
+    if (front == -1)
+    {
+        printf("Queue is empty.\n");
+        return -1;
+    }
+    else
+    {
+        node = queue[front];
+        front++;
+        if (front > rear)
+        {
+            front = rear = -1;
+        }
+        return node;
+    }
+}
+
+// BFS traversal using adjacency matrix
+void bfs(int start, int n)
+{
+    enqueue(start);
+    visited[start] = 1;
+
+    while (front != -1)
+    {
+        int currentNode = dequeue();
+        printf("%d ", currentNode);
+
+        for (int i = 0; i < n; i++)
+        {
+            if (adjMatrix[currentNode][i] == 1 && !visited[i])
+            {
+                enqueue(i);
+                visited[i] = 1;
+            }
         }
     }
 }
 
-void max(struct node *root){
-    if(root->right == NULL)
-        return;
-    else:
-    max(root->right);
-}
+int main()
+{
+    int n; // Number of nodes
+    printf("Enter the number of nodes: ");
+    scanf("%d", &n);
 
-void min(struct node *root){
-    if(root->left == NULL)
-        return;
-    else:
-    min(root->left);
-}
-
-void delete_node(struct node *root, int data){
-    if(root == NULL){
-        free(root);
-        root = NULL;
-    }
-    else if(root->left == NULL){
-        struct node *temp = root;
-        root = temp->right;
-        free(temp);
-    }
-    else if(root->right == NULL){
-        struct node *temp = root;
-        root = temp->left;
-        free(temp);
-    }
-    else{
-        struct node *temp = root->right;
-        while(temp->left != NULL){
-            temp = temp->left;
+    // Input adjacency matrix
+    printf("Enter the adjacency matrix:\n");
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            scanf("%d", &adjMatrix[i][j]);
         }
-        root->data = temp->data;
-        delete_node(root->right, temp->data);
     }
+
+    // Initialize visited array
+    for (int i = 0; i < n; i++)
+    {
+        visited[i] = 0;
+    }
+
+    // Starting node for BFS
+    int startNode;
+    printf("Enter the starting node for BFS: ");
+    scanf("%d", &startNode);
+
+    printf("BFS traversal starting from node %d: ", startNode);
+    bfs(startNode, n);
+
+    return 0;
 }

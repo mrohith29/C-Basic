@@ -40,7 +40,7 @@ int main(){
   char infix[100], postfix[100], temp;
   int i,j=0;
   scanf("%s", infix);
-  for(i = 0; i!='\0'; i++){
+  for(i = 0; infix[i]!='\0'; i++){
     if(infix[i] == '('){
       push(stack, infix[i]);
     }

@@ -1,52 +1,37 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct node{
+struct node {
     int data;
     struct node *next;
     struct node *prev;
 } *head = NULL;
 
-struct node *getNode(int data)
+struct node *createNode(int data)
 {
-    struct node *newNode = (struct node *)(malloc(sizeof(struct node)));
-    newNode->next = NULL;
-    newNode->prev = NULL;
-    newNode->data = data;
-    return newNode;
+    struct node *temp = (struct node *)(malloc(sizeof(struct node)));
+    temp->data = data;
+    return temp;
 }
 
 void insert(int data, int pos){
-    struct node *newNode = getNode(data);
-    if(head == NULL){
-        head = newNode;
-    }
-    else if(pos == 0){
-        newNode->next = head;
-        head->prev = newNode;
-        head = newNode;
+    struct node *current = head;
+    struct node *temp = createNode(data);
+    if(pos == 0){
+        temp->next = current;
+        current->prev = temp;
+        current = temp;
     }
     else{
-        struct node *current = head;
-        for (int i = 0; i < pos - 1; i++){
+        for (int i = 0; i < pos - 1 && current != NULL; i++)
+        {
             current = current->next;
         }
-        newNode->next = current->next;
-        newNode->prev = current;
-        if(current->next != NULL){
-            current->next->prev = newNode;
-        }
-        current->next = newNode;
-    }
-}
-
-void display()
-{
-    struct node *current = head;
-    while (current != NULL)
-    {
-        printf("%d->", current->data);
-        current = current->next;
+        temp->next = current->next;
+        temp->prev = current;
+        if (current->next != NULL)
+            current->next->prev = temp;
+        current->next = temp;
     }
 }
 
@@ -65,11 +50,19 @@ void rev_display()
     printf("NULL\n");
 }
 
+void display(){
+    struct node *current = head;
+    while (current != NULL)
+    {
+        printf("%d->", current->data);
+        current = current->next;
+    }
+}
+
 int main(){
     insert(12, 0);
-    insert(14, 1);
-    insert(15, 2);
-    insert(16, 3);
-    insert(11, 1);
+    insert(13, 0);
     display();
+
+    return 0;
 }

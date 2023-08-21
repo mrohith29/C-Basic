@@ -1,3 +1,7 @@
+---
+marp: true
+---
+
 # Basic C Programs
 
 Most people usually start their programming journey with c, but I took a little different approach.
@@ -13,6 +17,7 @@ This repository is a small attempt at that
 2. Basic Programs: Basic Programs to Learn C
 3. DataStructures: Implementations of basic datastructures in c
 4. Small Programs: Small Programs Ideal for beginners
+
 
 ## License
 
